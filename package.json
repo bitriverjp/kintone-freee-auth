@@ -1,0 +1,15 @@
+{
+  "name": "kintone-freee-auth",
+  "version": "1.0.0",
+  "description": "This is a plugin for kintone enabling OAuth with freee.",
+  "author": "bitRiver Inc.",
+  "license": "MIT",
+  "dependencies": {
+    "@kintone/webpack-plugin-kintone-plugin": "^3.0.3",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "scripts": {
+    "build": "webpack --mode production"
+  }
+}

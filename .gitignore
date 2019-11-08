@@ -1,0 +1,9 @@
+node_modules
+.DS_Store
+
+# generated
+dist
+plugin/js
+
+# secrets
+private.ppk

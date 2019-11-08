@@ -1,0 +1,41 @@
+{
+    "manifest_version": 1,
+    "version": 1,
+    "type": "APP",
+    "name": {
+        "ja": "freee OAuthプラグイン",
+        "en": "Plugin for OAuth with freee"
+    },
+    "description": {
+        "ja": "freeeへのOAuth認証を提供します。",
+        "en": "This provide you to use OAuth with freee"
+    },
+    "icon": "image/icon.png",
+    "homepage_url": {
+        "ja": "https://kintone.bitriver.jp/",
+        "en": "https://kintone.bitriver.jp/",
+        "zh": "https://kintone.bitriver.jp/"
+    },
+    "desktop": {
+        "js": [
+            "https://js.cybozu.com/jquery/3.3.1/jquery.min.js",
+            "js/desktop.js"
+        ],
+        "css": [
+        ]
+    },
+    "config": {
+        "html": "html/config.html",
+        "js": [
+            "https://js.cybozu.com/jquery/3.3.1/jquery.min.js",
+            "js/mobile.js"
+        ],
+        "css": [
+        ],
+        "required_params": [
+            "clientKey",
+            "clientSecret",
+            "callBackUrl"
+        ]
+    }
+}
