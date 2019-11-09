@@ -1,11 +1,20 @@
-((PLUGIN_ID) => {
-    'use strict';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
-    // 設定値読み込み用変数
-    var CONFIG = kintone.plugin.app.getConfig(PLUGIN_ID);
-    // 設定値読み込み
-    if (!CONFIG) {
-        return false;
-    }
+class Desktop extends Component {
+  constructor(props) {
+    super(props)
+  }
 
-})(kintone.$PLUGIN_ID);
+  render() {
+    return (
+        <div/>
+    )
+  }
+}
+
+kintone.events.on("app.record.index.show", (event) => {
+    const kintoneSpaceElement = kintone.app.getHeaderSpaceElement()
+    ReactDOM.render(<Desktop />, kintoneSpaceElement)
+    return event
+})

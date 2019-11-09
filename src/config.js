@@ -1,22 +1,18 @@
-/*
- * kintone-freee-auth Plug-in
- * Copyright (c) 2019 bitRiver Inc.
- *
- * Licensed under the MIT License
- */
-jQuery.noConflict();
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { Button } from '@kintone/kintone-ui-component';
 
-(($, PLUGIN_ID) => {
-    'use strict';
+class Config extends Component {
+  constructor(props) {
+    super(props)
+  }
 
-    // プラグインIDの設定
-    const KEY = PLUGIN_ID;
-    const CONF = kintone.plugin.app.getConfig(KEY);
-    const fields = [];
+  render() {
+    return (
+        <Button text='Submit' type='submit' onClick={function() { alert('This is my customization') }}/>
+    )
+  }
+}
 
-    function escapeHtml(htmlstr) {
-        return htmlstr.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-            .replace(/'/g, '&quot;').replace(/'/g, '&#39;');
-    };
-
-})(jQuery, kintone.$PLUGIN_ID);
+const element = document.getElementById("kintone_freee_auth_config")
+if (element) ReactDOM.render(<Config />, element)
