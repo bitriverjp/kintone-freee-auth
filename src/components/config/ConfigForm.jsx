@@ -5,7 +5,7 @@ export default class ConfigForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      clientKey: props.clientKey,
+      clientId: props.clientId,
       clientSecret: props.clientSecret,
       callBackUrl: props.callBackUrl,
     };
@@ -17,8 +17,8 @@ export default class ConfigForm extends React.Component {
         <div>
           <Label isRequired={true} text="Client Key:"/>
           <Text
-            value={this.state.clientKey}
-            onChange={value => this.setState({ clientKey: value })}
+            value={this.state.clientId}
+            onChange={value => this.setState({ clientId: value })}
           />
         </div>
         <div>

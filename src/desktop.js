@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import ENV from './_environments'
 
 class Desktop extends Component {
   constructor(props) {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import ConfigForm from './components/config/ConfigForm'
+import ENV from './_environments'
 
 class Config extends Component {
   constructor(props) {
@@ -8,22 +9,35 @@ class Config extends Component {
     const pluginId = kintone.$PLUGIN_ID
     let config = kintone.plugin.app.getConfig(pluginId)
     if (!config) config = {
-      clientKey: '',
-      clientSecret: '',
+      clientId: '',
       callBackUrl: '',
     }
+    let proxyConfig = kintone.plugin.app.getProxyConfig(ENV.tokenUrl, 'POST')
+    console.log(proxyConfig)
     this.state = {
       pluginId: pluginId,
       ...config,
+      clientSecret: proxyConfig.data.client_secret
     }
   }
 
   handleSubmit(config) {
-    console.log(config)
-    if (!config.clientKey) return alert('必須です。')
+    if (!config.clientId) return alert('必須です。')
     if (!config.clientSecret) return alert('必須です。')
     if (!config.callBackUrl) return alert('必須です。')
-    kintone.plugin.app.setConfig(config)
+
+    const header = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    const data = {
+      'client_secret': config.clientSecret,
+    }
+    kintone.plugin.app.setProxyConfig(ENV.tokenUrl, 'POST', header, data, () => {
+      kintone.plugin.app.setConfig({
+        clientId: config.clientId,
+        callBackUrl: config.callBackUrl,
+      })
+    })  
   }
 
   handleCancel() {
@@ -33,7 +47,7 @@ class Config extends Component {
   render() {
     return (
       <ConfigForm
-        clientKey={this.state.clientKey}
+        clientId={this.state.clientId}
         clientSecret={this.state.clientSecret}
         callBackUrl={this.state.callBackUrl}
         onSubmit={this.handleSubmit.bind(this)}

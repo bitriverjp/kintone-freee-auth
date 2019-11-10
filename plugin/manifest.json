@@ -38,8 +38,7 @@
         "css": [
         ],
         "required_params": [
-            "clientKey",
-            "clientSecret",
+            "clientId",
             "callBackUrl"
         ]
     }
