@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 
 class Desktop extends Component {
   constructor(props) {

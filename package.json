@@ -5,23 +5,35 @@
   "author": "bitRiver Inc.",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "upload": "node -r dotenv/config node_modules/@kintone/plugin-uploader/bin/cli.js dist/kintone-freee-auth-plugin.zip"
   },
   "dependencies": {
     "@kintone/kintone-ui-component": "^0.4.3",
-    "@kintone/webpack-plugin-kintone-plugin": "^3.0.3",
     "react": "^16.11.0",
     "react-dom": "^16.11.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-react": "^7.7.0",
-    "@babel/runtime": "^7.7.2",
+    "@kintone/plugin-uploader": "^3.0.5",
+    "@kintone/webpack-plugin-kintone-plugin": "^3.0.3",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
+    "dotenv": "^8.2.0",
     "style-loader": "^1.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/react"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ]
   }
 }

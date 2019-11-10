@@ -15,10 +15,7 @@ module.exports = {
     rules: [
       { 
         exclude: /node_modules/, 
-        loader: 'babel-loader', 
-        query: { 
-          presets: ["@babel/preset-env", "@babel/react"] 
-        } 
+        loader: 'babel-loader'
       },
       {
         test: /\.css$/,
