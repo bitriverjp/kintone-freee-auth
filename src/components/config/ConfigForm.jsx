@@ -5,9 +5,9 @@ export default class ConfigForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      clientKey: '',
-      clientSecret: '',
-      callBackUrl: '',
+      clientKey: props.clientKey,
+      clientSecret: props.clientSecret,
+      callBackUrl: props.callBackUrl,
     };
   }
 

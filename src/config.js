@@ -5,26 +5,25 @@ import ConfigForm from './components/config/ConfigForm'
 class Config extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      pluginId: kintone.$PLUGIN_ID,
+    const pluginId = kintone.$PLUGIN_ID
+    let config = kintone.plugin.app.getConfig(pluginId)
+    if (!config) config = {
       clientKey: '',
       clientSecret: '',
       callBackUrl: '',
     }
-  }
-
-  componentDidMount() {
-    const config = kintone.plugin.app.getConfig(this.state.pluginId)
-    if (!config) return
-    this.setState({
-      clientKey: config.clientKey,
-      clientSecret: config.clientSecret,
-      callBackUrl: config.callBackUrl,  
-    })
+    this.state = {
+      pluginId: pluginId,
+      ...config,
+    }
   }
 
   handleSubmit(config) {
-    alert(config.clientKey)
+    console.log(config)
+    if (!config.clientKey) return alert('必須です。')
+    if (!config.clientSecret) return alert('必須です。')
+    if (!config.callBackUrl) return alert('必須です。')
+    kintone.plugin.app.setConfig(config)
   }
 
   handleCancel() {
