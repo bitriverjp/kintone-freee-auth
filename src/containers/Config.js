@@ -26,9 +26,9 @@ class Config extends React.Component {
     const { config } = this.props
     return (
       <ConfigForm
-        clientId={config.values.clientId}
-        clientSecret={config.values.clientSecret}
-        callBackUrl={config.values.callBackUrl}
+        clientId={config.clientId}
+        clientSecret={config.clientSecret}
+        callBackUrl={config.callBackUrl}
         onSubmit={this.handleSubmit}
         onCancel={this.handleCancel}
       />
@@ -44,4 +44,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(Config)
-  

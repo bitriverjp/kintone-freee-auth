@@ -3,15 +3,14 @@ import { LOAD, REQUEST_TO_SAVE, SUCCESS_TO_SAVE } from '../actions/configActions
 
 function config(state = {
   isSaving: false,
-  values: {}
 }, action) {
   switch (action.type) {
     case LOAD:
-      return { isSaving: false, values: action.values }
+      return { isSaving: false, ...action.values }
     case REQUEST_TO_SAVE:
-      return { isSaving: true, values: action.values }
+      return { isSaving: true, ...action.values }
     case SUCCESS_TO_SAVE:
-      return { isSaving: false, values: state.values }
+      return { isSaving: false, ...state.values }
     default:
       return state
   }

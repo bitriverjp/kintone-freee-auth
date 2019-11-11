@@ -1,11 +1,20 @@
 import { createStore, applyMiddleware } from 'redux'
-import configReducer from '../reducers/configReducer'
 import createSagaMiddleware from 'redux-saga'
+import configReducer from '../reducers/configReducer'
+import applicationReducer from '../reducers/applicationReducer'
 
-export default function configureStore() {
+export const CONFIG = 'CONFIG'
+export const APPLICATION = 'APPLICATION'
+
+export const configureStore = (type) => {
+  let reducer;
+  if (!type) return
+  if (type === CONFIG) reducer = configReducer
+  else if (type === APPLICATION) reducer = applicationReducer
+
   const sagaMiddleware = createSagaMiddleware()
   return {
-    ...createStore(configReducer, applyMiddleware(sagaMiddleware)),
+    ...createStore(reducer, applyMiddleware(sagaMiddleware)),
     runSaga: sagaMiddleware.run,
   }
 }

@@ -15,20 +15,32 @@ export const configApi = {
     }
   },
 
-  save(values) {
+  save(config) {
     const header = {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
     const data = {
-      'client_secret': values.clientSecret,
+      'client_secret': config.clientSecret,
     }
     return new Promise(resolve => {
       kintone.plugin.app.setProxyConfig(ENV.tokenUrl, 'POST', header, data, () => {
         kintone.plugin.app.setConfig({
-          clientId: values.clientId,
-          callBackUrl: values.callBackUrl,
+          clientId: config.clientId,
+          callBackUrl: config.callBackUrl,
         })
       })  
     })
-  }
+  },
+}
+
+export const applicationApi = {
+  load() {
+    const pluginId = kintone.$PLUGIN_ID
+    let config = kintone.plugin.app.getConfig(pluginId)
+    if (!config) config = {
+      clientId: '',
+      callBackUrl: '',
+    }
+    return config
+  },
 }

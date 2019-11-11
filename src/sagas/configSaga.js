@@ -22,41 +22,6 @@ export function* startup() {
   yield fork(loadConfig)
 }
 
-// Config.js
-// const pluginId = kintone.$PLUGIN_ID
-// let config = kintone.plugin.app.getConfig(pluginId)
-// if (!config) config = {
-//   clientId: '',
-//   callBackUrl: '',
-// }
-// let proxyConfig = kintone.plugin.app.getProxyConfig(ENV.tokenUrl, 'POST')
-// console.log(proxyConfig)
-// this.state = {
-//   pluginId: pluginId,
-//   ...config,
-//   clientSecret: proxyConfig.data.client_secret
-// }
-// }
-
-// handleSubmit(config) {
-// if (!config.clientId) return alert('必須です。')
-// if (!config.clientSecret) return alert('必須です。')
-// if (!config.callBackUrl) return alert('必須です。')
-
-// const header = {
-//   'Content-Type': 'application/x-www-form-urlencoded'
-// }
-// const data = {
-//   'client_secret': config.clientSecret,
-// }
-// kintone.plugin.app.setProxyConfig(ENV.tokenUrl, 'POST', header, data, () => {
-//   kintone.plugin.app.setConfig({
-//     clientId: config.clientId,
-//     callBackUrl: config.callBackUrl,
-//   })
-// })  
-// }
-
 export default function* root() {
   yield fork(startup)
   yield fork(watchRequest)

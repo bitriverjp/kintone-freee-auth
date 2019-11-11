@@ -4,10 +4,10 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import Config from './containers/Config'
 
-import configureStore from './store/configureStore'
+import { CONFIG, configureStore } from './store/configureStore'
 import configSaga from './sagas/configSaga'
 
-const store = configureStore()
+const store = configureStore(CONFIG)
 store.runSaga(configSaga)
 
 render(

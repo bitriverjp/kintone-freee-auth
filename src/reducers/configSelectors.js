@@ -1,3 +1,3 @@
 export function getValues(state) {
-  return state.config.values
+  return state.config
 }
