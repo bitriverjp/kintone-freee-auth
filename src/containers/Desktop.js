@@ -7,8 +7,9 @@ class Desktop extends React.Component {
   }
 
   componentDidMount() {
-    const { config } = this.props
+    const { config, freee } = this.props
     console.log(config)
+    console.log(freee)
   }
 
   render() {
@@ -18,9 +19,10 @@ class Desktop extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { config } = state
+  const { config, freee } = state
   return {
     config,
+    freee
   }
 }
   
