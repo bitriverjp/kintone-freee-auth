@@ -6,7 +6,6 @@ export const configApi = {
     let config = kintone.plugin.app.getConfig(pluginId)
     if (!config) config = {
       clientId: '',
-      callBackUrl: '',
       clientSecret: '',
     }
     return config
@@ -17,7 +16,6 @@ export const configApi = {
       kintone.plugin.app.setConfig({
         clientId: config.clientId,
         clientSecret: config.clientSecret,
-        callBackUrl: config.callBackUrl,
       })
     })
   },
@@ -29,10 +27,14 @@ export const applicationApi = {
     let config = kintone.plugin.app.getConfig(pluginId)
     if (!config) config = {
       clientId: '',
-      callBackUrl: '',
       clientSecret: '',
     }
     return config
+  },
+
+  getCallBackUrl() {
+    const appId = kintone.app.getId()
+    return location.protocol + '//' + location.hostname + '/k/' + appId + '/'
   },
 
   getAcceccToken(params) {

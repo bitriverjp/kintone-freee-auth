@@ -13,7 +13,6 @@ class Config extends React.Component {
   handleSubmit(config) {
     if (!config.clientId) return alert('必須です。')
     if (!config.clientSecret) return alert('必須です。')
-    if (!config.callBackUrl) return alert('必須です。')
  
     this.props.dispatch(requestToSave(config))
   }
@@ -28,7 +27,6 @@ class Config extends React.Component {
       <ConfigForm
         clientId={config.clientId}
         clientSecret={config.clientSecret}
-        callBackUrl={config.callBackUrl}
         onSubmit={this.handleSubmit}
         onCancel={this.handleCancel}
       />

@@ -33,6 +33,7 @@ export function* checkAuth() {
     const config = yield select(getConfig)
     const accessToken = yield call(applicationApi.getAcceccToken, {
       ...config,
+      callBackUrl: yield call(applicationApi.getCallBackUrl),
       authCode: authCode,
     })
     yield put(actions.receiveAccessToken(accessToken))
@@ -48,16 +49,17 @@ export function* checkAuth() {
 
 export function* watchRedirect() {
   while (true) {
-    const actionType = yield take([
+    const action = yield take([
       actions.REDIRECT_TO_FREEE,
       actions.REDIRECT_TO_ROOT,
     ])
     const config = yield select(getConfig)
-    const url = (actionType === actions.REDIRECT_TO_FREEE)
+    const callBackUrl = yield call(applicationApi.getCallBackUrl)
+    const url = (action.type === actions.REDIRECT_TO_FREEE)
       ? ENV.authUrl + '?response_type=code' +
         '&client_id=' + config.clientId +
-        '&redirect_uri=' + encodeURIComponent(config.callBackUrl)
-      : config.callBackUrl
+        '&redirect_uri=' + encodeURIComponent(callBackUrl)
+      : callBackUrl
     window.location.href = url
   }
 }

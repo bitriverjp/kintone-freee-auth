@@ -7,7 +7,6 @@ export default class ConfigForm extends React.Component {
     this.state = {
       clientId: props.clientId,
       clientSecret: props.clientSecret,
-      callBackUrl: props.callBackUrl,
     };
   }
 
@@ -26,13 +25,6 @@ export default class ConfigForm extends React.Component {
           <Text
             value={this.state.clientSecret}
             onChange={value => this.setState({ clientSecret: value })}
-          />
-        </div>
-        <div>
-          <Label isRequired={true} text="CallBack URL:"/>
-          <Text
-            value={this.state.callBackUrl}
-            onChange={value => this.setState({ callBackUrl: value })}
           />
         </div>
         <div className="kintone-freee-auth-toolbox">

@@ -6,15 +6,9 @@ class Desktop extends React.Component {
     super(props)
   }
 
-  componentDidMount() {
-    const { config, freee } = this.props
-    console.log(config)
-    console.log(freee)
-  }
-
   render() {
-    const { config } = this.props
-    return <div>{config.clientId}</div>
+    const { freee } = this.props
+    return <div>{freee.companyId}</div>
   }
 }
 
