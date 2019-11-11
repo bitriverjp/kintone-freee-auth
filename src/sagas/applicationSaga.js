@@ -2,6 +2,7 @@ import { take, put, call, fork, select } from 'redux-saga/effects'
 import * as actions from '../actions/applicationActions'
 import { getConfig, getFreee } from '../reducers/applicationSelectors'
 import { applicationApi } from '../services'
+import kintoneFreeeAuthUtility from '../util/kintoneFreeeAuthUtility'
 import ENV from '../_environments'
 
 export function* loadConfig() {
@@ -15,6 +16,14 @@ export function* loadStrage() {
   yield put(actions.loadStrage({
     accessToken, companyId,
   }))
+}
+
+export function* storeToPublic() {
+  const freee = yield select(getFreee)
+  window.kintoneFreeeAuthUtility = new kintoneFreeeAuthUtility(
+    freee.accessToken,
+    freee.companyId,
+  )
 }
 
 export function* checkAuth() {
@@ -44,6 +53,7 @@ export function* checkAuth() {
       accessToken: freee.accessToken
     })
     yield put(actions.receiveCompayId(companyId))
+    yield call(storeToPublic)
   }
 }
 
