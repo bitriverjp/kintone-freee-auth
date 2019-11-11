@@ -23,13 +23,6 @@
         "css": [
         ]
     },
-    "mobile": {
-        "js": [
-            "js/mobile.js"
-        ],
-        "css": [
-        ]
-    },
     "config": {
         "html": "html/config.html",
         "js": [
