@@ -15,7 +15,7 @@ export default class ConfigForm extends React.Component {
     return (
       <div>
         <div>
-          <Label isRequired={true} text="Client Key:"/>
+          <Label isRequired={true} text="Client ID:"/>
           <Text
             value={this.state.clientId}
             onChange={value => this.setState({ clientId: value })}

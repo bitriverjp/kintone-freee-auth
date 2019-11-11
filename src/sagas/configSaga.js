@@ -17,7 +17,6 @@ export function* watchRequest() {
   }
 }
 
-
 export function* startup() {
   yield fork(loadConfig)
 }

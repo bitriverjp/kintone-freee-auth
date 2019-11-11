@@ -7,28 +7,18 @@ export const configApi = {
     if (!config) config = {
       clientId: '',
       callBackUrl: '',
+      clientSecret: '',
     }
-    let proxyConfig = kintone.plugin.app.getProxyConfig(ENV.tokenUrl, 'POST')
-    return {
-      ...config,
-      clientSecret: proxyConfig.data.client_secret  
-    }
+    return config
   },
 
   save(config) {
-    const header = {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-    const data = {
-      'client_secret': config.clientSecret,
-    }
-    return new Promise(resolve => {
-      kintone.plugin.app.setProxyConfig(ENV.tokenUrl, 'POST', header, data, () => {
-        kintone.plugin.app.setConfig({
-          clientId: config.clientId,
-          callBackUrl: config.callBackUrl,
-        })
-      })  
+    return new Promise(() => {
+      kintone.plugin.app.setConfig({
+        clientId: config.clientId,
+        clientSecret: config.clientSecret,
+        callBackUrl: config.callBackUrl,
+      })
     })
   },
 }
