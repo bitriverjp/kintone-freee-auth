@@ -9,13 +9,16 @@
     "upload": "node -r dotenv/config node_modules/@kintone/plugin-uploader/bin/cli.js dist/kintone-freee-auth-plugin.zip"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.7.0",
     "@kintone/kintone-ui-component": "^0.4.3",
     "react": "^16.11.0",
-    "react-dom": "^16.11.0"
+    "react-dom": "^16.11.0",
+    "react-redux": "^7.1.3",
+    "redux": "^4.0.4",
+    "redux-saga": "^1.1.3"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
-    "@babel/plugin-proposal-class-properties": "^7.7.0",
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-react": "^7.7.0",
     "@kintone/plugin-uploader": "^3.0.5",
@@ -29,11 +32,16 @@
   },
   "babel": {
     "presets": [
-      "@babel/preset-env",
-      "@babel/react"
+      [
+        "@babel/preset-env",
+        {
+          "loose": true,
+          "modules": false,
+          "forceAllTransforms": true
+        }
+      ],
+      "@babel/preset-react"
     ],
-    "plugins": [
-      "@babel/plugin-proposal-class-properties"
-    ]
+    "plugins": []
   }
 }

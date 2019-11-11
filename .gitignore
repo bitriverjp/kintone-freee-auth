@@ -1,6 +1,7 @@
 .env
 .DS_Store
 node_modules
+tmp
 yarn-error.log
 
 # generated
