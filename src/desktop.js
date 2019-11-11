@@ -1,21 +1,22 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import ENV from './_environments'
+import '@babel/polyfill'
+import * as React from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import Desktop from './containers/Desktop'
 
-class Desktop extends Component {
-  constructor(props) {
-    super(props)
-  }
+import { APPLICATION, configureStore } from './store/configureStore'
+import applicationSaga from './sagas/applicationSaga'
 
-  render() {
-    return (
-        <div/>
-    )
-  }
-}
+const store = configureStore(APPLICATION)
+store.runSaga(applicationSaga)
 
 kintone.events.on("app.record.index.show", (event) => {
-    const kintoneSpaceElement = kintone.app.getHeaderSpaceElement()
-    ReactDOM.render(<Desktop />, kintoneSpaceElement)
-    return event
+  const kintoneSpaceElement = kintone.app.getHeaderSpaceElement()
+  render(
+    <Provider store={store}>
+      <Desktop />
+    </Provider>,
+    kintoneSpaceElement
+  )
+  return event
 })
