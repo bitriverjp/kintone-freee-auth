@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --mode production",
+    "deploy": "rm -rf plugin/js && yarn build && yarn upload",
     "upload": "node -r dotenv/config node_modules/@kintone/plugin-uploader/bin/cli.js dist/kintone-freee-auth-plugin.zip"
   },
   "dependencies": {

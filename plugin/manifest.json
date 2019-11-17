@@ -31,8 +31,7 @@
         "css": [
         ],
         "required_params": [
-            "clientId",
-            "callBackUrl"
+            "clientId"
         ]
     }
 }

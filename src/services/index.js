@@ -5,17 +5,23 @@ export const configApi = {
     const pluginId = kintone.$PLUGIN_ID
     let config = kintone.plugin.app.getConfig(pluginId)
     if (!config) config = {
-      clientId: '',
-      clientSecret: '',
+      clientId: ''
+    }
+    let proxyConfig = kintone.plugin.app.getProxyConfig(ENV.tokenUrl, 'POST');
+    if (proxyConfig && proxyConfig.data && proxyConfig.data.client_secret) {
+      config.clientSecret = proxyConfig.data.client_secret
     }
     return config
   },
 
   save(config) {
     return new Promise(() => {
-      kintone.plugin.app.setConfig({
-        clientId: config.clientId,
-        clientSecret: config.clientSecret,
+      kintone.plugin.app.setProxyConfig(ENV.tokenUrl, 'POST', {}, {
+        client_secret: config.clientSecret,
+      }, () => {
+        kintone.plugin.app.setConfig({
+          clientId: config.clientId,
+        })  
       })
     })
   },
@@ -26,8 +32,7 @@ export const applicationApi = {
     const pluginId = kintone.$PLUGIN_ID
     let config = kintone.plugin.app.getConfig(pluginId)
     if (!config) config = {
-      clientId: '',
-      clientSecret: '',
+      clientId: ''
     }
     return config
   },
@@ -38,17 +43,18 @@ export const applicationApi = {
   },
 
   getAcceccToken(params) {
+    const pluginId = kintone.$PLUGIN_ID
     const header = {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
     }
-    const body = '' +
-      'grant_type=authorization_code' +
-      '&client_id=' + params.clientId +
-      '&client_secret=' + params.clientSecret +
-      '&redirect_uri=' + encodeURIComponent(params.callBackUrl) +
-      '&code=' + params.authCode
+    const body = {
+      grant_type: 'authorization_code',
+      client_id: params.clientId,
+      redirect_uri: params.callBackUrl,
+      code: params.authCode,
+    }
     // アクセストークン取得のAPIを実行する
-    return kintone.proxy(ENV.tokenUrl, 'POST', header, body).then(response => {
+    return kintone.plugin.app.proxy(pluginId, ENV.tokenUrl, 'POST', header, body).then(response => {
       if (!response) return
       console.log(response)
 
