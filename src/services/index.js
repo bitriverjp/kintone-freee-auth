@@ -60,7 +60,6 @@ export const applicationApi = {
     // アクセストークン取得のAPIを実行する
     return kintone.plugin.app.proxy(pluginId, ENV.tokenUrl, 'POST', header, body).then(response => {
       if (!response) return '';
-      console.log(response);
 
       // freeeから取得した認証情報をパースする
       const credentials = JSON.parse(response[0]);
@@ -85,15 +84,11 @@ export const applicationApi = {
     };
     return kintone.proxy(ENV.endPointUrl + '/companies', 'GET', header, {}).then(response => {
       if (!response) return '';
-      console.log(response);
 
       // 結果をパースする
       const result = JSON.parse(response[0]);
       // 事業所一覧の配列から情報を取り出す
       if (!result.companies) return '';
-      result.companies.forEach(company => {
-        console.log(company);
-      });
 
       // 1番目の事業所を利用する
       let companyId = result.companies[0].id;
