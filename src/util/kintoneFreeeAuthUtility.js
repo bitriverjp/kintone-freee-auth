@@ -1,23 +1,25 @@
-import ENV from '../_environments'
+import ENV from '../_environments';
 
-class kintoneFreeeAuthUtility {
+class KintoneFreeeAuthUtility {
   constructor(accessToken, companyId) {
-    this.accessToken = accessToken
-    this.companyId = companyId
+    this.accessToken = accessToken;
+    this.companyId = companyId;
   }
 
   getCompanyId() {
-    return Number(this.companyId)
+    return Number(this.companyId);
   }
 
   proxy(path, method, body) {
     const header = {
       'Authorization': 'Bearer ' + this.accessToken,
       'Content-Type': 'application/json',
-    }
-    if (path.substr(0, 1) !== '/') path = '/' + path
-    return kintone.proxy(ENV.endPointUrl + path, method, header, body)
+    };
+    const url = (path.substr(0, 1) !== '/')
+      ? ENV.endPointUrl + '/' + path
+      : ENV.endPointUrl + path;
+    return kintone.proxy(url, method, header, body);
   }
 }
 
-export default kintoneFreeeAuthUtility
+export default KintoneFreeeAuthUtility;

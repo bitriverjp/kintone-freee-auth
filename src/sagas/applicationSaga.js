@@ -1,13 +1,13 @@
-import { take, put, call, fork, select } from 'redux-saga/effects'
-import * as actions from '../actions/applicationActions'
-import { getConfig, getFreee } from '../reducers/applicationSelectors'
-import { applicationApi } from '../services'
-import kintoneFreeeAuthUtility from '../util/kintoneFreeeAuthUtility'
-import ENV from '../_environments'
+import {take, put, call, fork, select} from 'redux-saga/effects';
+import * as actions from '../actions/applicationActions';
+import {getConfig, getFreee} from '../reducers/applicationSelectors';
+import {applicationApi} from '../services';
+import KintoneFreeeAuthUtility from '../util/KintoneFreeeAuthUtility';
+import ENV from '../_environments';
 
 export function* loadConfig() {
-  const values = yield call(applicationApi.loadConfig)
-  yield put(actions.loadConfig(values))
+  const values = yield call(applicationApi.loadConfig);
+  yield put(actions.loadConfig(values));
 }
 
 export function* loadStrage() {
@@ -15,45 +15,43 @@ export function* loadStrage() {
   const companyId = window.sessionStorage.kfa_plugin_freeeCompanyId;
   yield put(actions.loadStrage({
     accessToken, companyId,
-  }))
+  }));
 }
 
 export function* storeToPublic() {
-  const freee = yield select(getFreee)
-  window.kintoneFreeeAuthUtility = new kintoneFreeeAuthUtility(
+  const freee = yield select(getFreee);
+  window.kintoneFreeeAuthUtility = new KintoneFreeeAuthUtility(
     freee.accessToken,
     freee.companyId,
-  )
+  );
 }
 
 export function* checkAuth() {
-  const freee = yield select(getFreee)
+  const freee = yield select(getFreee);
   const queryString = window.location.search;
   if (!queryString && (!freee.accessToken || freee.accessToken === 'FINISHED')) {
-    yield put(actions.redirectToFreee())
-  }
-  else if (queryString && queryString.substr(0, 6) === '?code=') {
+    yield put(actions.redirectToFreee());
+  } else if (queryString && queryString.substr(0, 6) === '?code=') {
     const authCode = queryString.substr(6);
     if (!authCode) {
-        console.log('freeeの認証情報取得に失敗しました。')
-        yield put(actions.receiveAccessToken('FINISHED'))
-        return
+      console.log('freeeの認証情報取得に失敗しました。');
+      yield put(actions.receiveAccessToken('FINISHED'));
+      return;
     }
-    const config = yield select(getConfig)
+    const config = yield select(getConfig);
     const accessToken = yield call(applicationApi.getAcceccToken, {
       ...config,
       callBackUrl: yield call(applicationApi.getCallBackUrl),
       authCode: authCode,
-    })
-    yield put(actions.receiveAccessToken(accessToken))
-    yield put(actions.redirectToRoot())
-  }
-  else if (freee.accessToken && freee.accessToken !== 'FINISHED') {
+    });
+    yield put(actions.receiveAccessToken(accessToken));
+    yield put(actions.redirectToRoot());
+  } else if (freee.accessToken && freee.accessToken !== 'FINISHED') {
     const companyId = yield call(applicationApi.getCompanyId, {
       accessToken: freee.accessToken
-    })
-    yield put(actions.receiveCompayId(companyId))
-    yield call(storeToPublic)
+    });
+    yield put(actions.receiveCompayId(companyId));
+    yield call(storeToPublic);
   }
 }
 
@@ -62,25 +60,25 @@ export function* watchRedirect() {
     const action = yield take([
       actions.REDIRECT_TO_FREEE,
       actions.REDIRECT_TO_ROOT,
-    ])
-    const config = yield select(getConfig)
-    const callBackUrl = yield call(applicationApi.getCallBackUrl)
+    ]);
+    const config = yield select(getConfig);
+    const callBackUrl = yield call(applicationApi.getCallBackUrl);
     const url = (action.type === actions.REDIRECT_TO_FREEE)
       ? ENV.authUrl + '?response_type=code' +
         '&client_id=' + config.clientId +
         '&redirect_uri=' + encodeURIComponent(callBackUrl)
-      : callBackUrl
-    window.location.href = url
+      : callBackUrl;
+    window.location.href = url;
   }
 }
 
 export function* startup() {
-  yield call(loadConfig)
-  yield call(loadStrage)
-  yield fork(checkAuth)
+  yield call(loadConfig);
+  yield call(loadStrage);
+  yield fork(checkAuth);
 }
 
 export default function* root() {
-  yield fork(startup)
-  yield fork(watchRedirect)
+  yield fork(startup);
+  yield fork(watchRedirect);
 }

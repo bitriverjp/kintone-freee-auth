@@ -1,9 +1,9 @@
-import { Label, Text, Button } from '@kintone/kintone-ui-component'
-import React from 'react'
+import {Label, Text, Button} from '@kintone/kintone-ui-component';
+import React from 'react';
 
 export default class ConfigForm extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       clientId: props.clientId,
       clientSecret: props.clientSecret,
@@ -14,17 +14,17 @@ export default class ConfigForm extends React.Component {
     return (
       <div>
         <div>
-          <Label isRequired={true} text="Client ID:"/>
+          <Label isRequired text="Client ID:" />
           <Text
             value={this.state.clientId}
-            onChange={value => this.setState({ clientId: value })}
+            onChange={value => this.setState({clientId: value})}
           />
         </div>
         <div>
-          <Label isRequired={true} text="Client Secret:"/>
+          <Label isRequired text="Client Secret:" />
           <Text
             value={this.state.clientSecret}
-            onChange={value => this.setState({ clientSecret: value })}
+            onChange={value => this.setState({clientSecret: value})}
           />
         </div>
         <div className="kintone-freee-auth-toolbox">
@@ -39,6 +39,6 @@ export default class ConfigForm extends React.Component {
           />
         </div>
       </div>
-    )
+    );
   }
 }

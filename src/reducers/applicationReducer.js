@@ -1,37 +1,39 @@
-import { combineReducers } from 'redux'
-import * as actions from '../actions/applicationActions'
+import {combineReducers} from 'redux';
+import * as actions from '../actions/applicationActions';
 
-function config(state = {}, action) {
+function config(state, action) {
+  const newState = !state ? {} : state;
   switch (action.type) {
     case actions.LOAD_CONFIG:
-      return { ...action.values }
+      return {...action.values};
     default:
-      return state
+      return newState;
   }
 }
 
-function freee(state = {}, action) {
+function freee(state, action) {
+  const newState = !state ? {} : state;
   switch (action.type) {
     case actions.LOAD_STRAGE:
-      return { ...action.values }
+      return {...action.values};
     case actions.RECEIVE_ACCESS_TOKEN:
       return {
-        ...state,
+        ...newState,
         accessToken: action.token,
-      }
+      };
     case actions.RECEIVE_COMPANY_ID:
       return {
-        ...state,
+        ...newState,
         companyId: action.companyId,
-      }
+      };
     default:
-      return state
+      return newState;
   }
 }
 
 const applicationReducer = combineReducers({
   config,
   freee
-})
+});
 
-export default applicationReducer
+export default applicationReducer;

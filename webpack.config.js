@@ -3,8 +3,8 @@ const KintonePlugin = require('@kintone/webpack-plugin-kintone-plugin');
 
 module.exports = {
   entry: {
-    desktop: './src/desktop.js',
-    config: './src/config.js'
+    desktop: './src/desktop.jsx',
+    config: './src/config.jsx'
   },
   output: {
     path: path.resolve(__dirname, 'plugin', 'js'),
@@ -12,6 +12,15 @@ module.exports = {
   },
   module: { 
     rules: [
+      {
+        enforce: "pre",
+        test: /\.js$/,
+        exclude: /(node_modules|dist)/,
+        loader: "eslint-loader",
+        options: {
+          fix: true
+        }
+      },
       { 
         exclude: /node_modules/, 
         loader: 'babel-loader'
